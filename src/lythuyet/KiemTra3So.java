@@ -1,9 +1,8 @@
 package lythuyet;
-import java.util.Scanner;
-
 /*
  * Chuong trinh kiem tra 3 so nhap vao sap xep theo tang, giam hay khong sxep
  */
+import java.util.Scanner;
 public class KiemTra3So {
 
 	public static void main(String[] args) {

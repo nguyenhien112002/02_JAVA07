@@ -5,10 +5,8 @@
  *  break;
  * }
  */
-
 package lythuyet;
 import java.util.Scanner;
-
 public class BaiTapSwitchCase {
 
 	public static void main(String[] args) {

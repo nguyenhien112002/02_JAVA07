@@ -1,6 +1,5 @@
 package lythuyet;
 import java.util.Scanner;
-
 public class NhapXuat {
 
 	public static void main(String[] args) {

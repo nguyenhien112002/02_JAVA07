@@ -1,7 +1,5 @@
 package lythuyet;
 
-import java.util.Scanner;
-
 /*
  * Nhap vao mot so tu 10 den 99
  * Xuat ra man hinh cach doc tieng viet so do
@@ -13,6 +11,7 @@ import java.util.Scanner;
  * 55 -> nﾄノ mﾆｰﾆ｡i lﾄノ
  * 5 -> nﾄノ
  */
+import java.util.Scanner;
 public class BaiTapDocSo {
 
 	public static void main(String[] args) {
