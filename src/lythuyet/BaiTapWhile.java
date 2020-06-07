@@ -32,12 +32,12 @@ public class BaiTapWhile {
 			
 		//xu ly
 		while(temp <= soTuNhien) {
-			tong = tong + temp;
+			tong += temp;
 			temp++;
 		}
 		
 		//Xuat
 		System.out.println("Tổng của số tự nhiên 1+2+3+...+n là: "+ tong);
-	}
+	}	
 
 }

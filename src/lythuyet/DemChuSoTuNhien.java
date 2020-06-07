@@ -25,5 +25,13 @@ public class DemChuSoTuNhien {
 		//Xuat
 		System.out.println("Số chữ số của số tự nhiên là: "+ soChuSo);
 	}
+	
+	public static int demChuSo(Long chuso) {
+		
+		if(chuso / 10 ==0)
+		return 1;
+		//lặp đệ qui
+		else return 1 + demChuSo(chuso);
+	}
 
 }
