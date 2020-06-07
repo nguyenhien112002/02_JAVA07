@@ -30,6 +30,7 @@ public class BaiTapMangDoiXung {
 		for(int i = 0; i< arrSoTuNhien.length/2; i++) {
 			if(arrSoTuNhien[i] != arrSoTuNhien[arrSoTuNhien.length-i-1]) {
 				dem++;
+				break;
 				i= arrSoTuNhien.length;
 			}
 		}
