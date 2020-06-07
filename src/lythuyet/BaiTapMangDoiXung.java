@@ -31,7 +31,7 @@ public class BaiTapMangDoiXung {
 			if(arrSoTuNhien[i] != arrSoTuNhien[arrSoTuNhien.length-i-1]) {
 				dem++;
 				break;
-				i= arrSoTuNhien.length;
+				//i= arrSoTuNhien.length;
 			}
 		}
 		if (dem== 0) {
