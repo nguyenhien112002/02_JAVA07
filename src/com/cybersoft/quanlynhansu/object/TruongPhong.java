@@ -1,8 +1,8 @@
 package com.cybersoft.quanlynhansu.object;
 
-public class GiamDoc extends NhanSu {
+public class TruongPhong extends NhanSu{
 	
-	float coPhan;
+	
 	
 	
 
