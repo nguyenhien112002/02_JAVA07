@@ -1,25 +1,15 @@
 package com.cybersoft.quanlynhansu.object;
 
 public class NhanVien extends NhanSu {
-	//constructor
-	//cú pháp [access modifier] [tên Class] ([tham số]){}
-	private int maQuanLy;
-	public NhanVien() {
-		maSo = 333;
-		hoTen = "nguyen";
-		soDienThoai = "0908";
-		ngayLamViec = 21;
-		luongMotNgay = 100;
-		maQuanLy = 0;
-	}
-	public NhanVien(int maSo, String hoTen,String soDienThoai,float luongMotNgay,float ngayLamViec, int maQuanLy ) {
-		this.maSo = maSo;
-		this.hoTen = hoTen;
-		this.soDienThoai = soDienThoai;
-		this.ngayLamViec = ngayLamViec;
-		this.luongMotNgay = luongMotNgay;
-		this.maQuanLy = maQuanLy;
-	}
-
-
+    
+    private int maQuanLy;
+    //private int maSoA = NhanSu.getMaSoTuTang();
+    public NhanVien(String ten, String SoDienThoai, float soNgayLamViec, int maQuanLy) {
+        this.hoTen = ten;
+        this.maSo = getMaSoTuTang();;
+        this.soDienThoai = SoDienThoai;
+        this.ngayLamViec = soNgayLamViec;
+        this.luongMotNgay = 100;
+        this.maQuanLy = maQuanLy;
+    }
 }
