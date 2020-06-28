@@ -6,3 +6,6 @@ auto close tag
 
 2020/06/28
 javascript
+
+zenmode
+ctrl+P
