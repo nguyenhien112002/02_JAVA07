@@ -39,6 +39,7 @@ public class TuoiServlet extends HttpServlet {
         //super.doPost(req, resp);
         resp.setContentType("text/html");
         resp.setCharacterEncoding("UTF-8");
+        req.setCharacterEncoding("UTF-8");
         
         //lay thong tin
         String hoTen = req.getParameter("fullname");
