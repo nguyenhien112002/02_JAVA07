@@ -26,4 +26,7 @@ Webserver?
 -
 
 ---
+báo lỗi
+404: không có page
 
+405: không đúng kiểu truyền
