@@ -1,32 +1,29 @@
 
-2020/07/05 Servlet
------------------
-
-
-
-
-
------------------
-
-
-
 2020/07/04 Servlet
 -----------------
+Servlet
+---
+-Ngôn ngữ back end:
+ C#, node js, javascrip, php,
 
+-client <-bộ giao thức http->server
 
+request: yêu cầu
+response: phản hồi
 
+Webserver?
+1 máy tính, 
+ Có chỗ lưu trữ
+ Có cài phần mềm HTTP server: nhận request của client
+   truy vấn phức tạp thì gửi request cho application server: phần mềm mà lặp trình viên viết
+ Có cài application server
 
+ http server có sẵn, cài đặt
+ application server: appache tomcat...
+ 
+???Ngoài serlvet ra còn thư viện nào ko?
 
------------------
+-
 
-visual studio code
+---
 
-live sever
-auto rename tag
-auto close tag
-
-2020/06/28
-javascript
-
-zenmode
-ctrl+P
