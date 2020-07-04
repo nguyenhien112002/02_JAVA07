@@ -59,6 +59,6 @@ public class TuoiServlet extends HttpServlet {
         
         writer.print("<h4>Họ tên: "+ hoTen+ "</h4>");
         writer.print("<h4>Năm sinh: " + namSinh + "</h4>");
-        writer.print("<h5>Tuổi: + " + kqTuoi+ "</h5></br>");
+        writer.print("<h5>Tuổi: " + kqTuoi + "</h5></br>");
     }
 }
