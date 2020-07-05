@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Calendar;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -20,18 +21,18 @@ public class TuoiServlet extends HttpServlet {
         resp.setCharacterEncoding("UTF-8");
         
         //lay thong tin
-        String hoTen = req.getParameter("fullname");
-        String tuoi = req.getParameter("year");
+//        String hoTen = req.getParameter("fullname");
+//        String tuoi = req.getParameter("year");
+//        
+//        System.err.println("Họ Tên :" + hoTen);
+//        System.err.println("Tuổi :" + tuoi);
+//        PrintWriter writer = resp.getWriter();
         
-        System.err.println("Họ Tên :" + hoTen);
-        System.err.println("Tuổi :" + tuoi);
-        PrintWriter writer = resp.getWriter();
-        writer.print("<from>");
-        writer.print("<h2>Trang Tính Tuổi</h2>");
-        
-        writer.print("<label>Họ tên: </label></br>");
-        writer.print("<label>Năm sinh: </label></br>");
-        writer.print("<label>Tuổi: </label></br>");
+        RequestDispatcher dispatcher = req.getRequestDispatcher("/WEB-INF/age/index.jsp");
+        dispatcher.forward(req,resp);
+        //nhanh hơn
+        //req.getRequestDispatcher("/WEB-INF/age/index.jsp").forward(req,resp);
+
     }
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -53,13 +54,16 @@ public class TuoiServlet extends HttpServlet {
         System.err.println("Tuổi :" + namSinh);
         System.err.println("kqTuoi: " + kqTuoi);
         
-        
-        PrintWriter writer = resp.getWriter();
-        writer.print("<from>");
-        writer.print("<h2>Trang Tính Tuổi POST</h2>");
-        
-        writer.print("<h4>Họ tên: "+ hoTen+ "</h4>");
-        writer.print("<h4>Năm sinh: " + namSinh + "</h4>");
-        writer.print("<h5>Tuổi: " + kqTuoi + "</h5></br>");
+        //thêm thông tin tuổi vào request
+        req.setAttribute("tuoiNguoiDung", kqTuoi);
+        req.getRequestDispatcher("/WEB-INF/age/index.jsp").forward(req,resp);
+//        
+//        PrintWriter writer = resp.getWriter();
+//        writer.print("<from>");
+//        writer.print("<h2>Trang Tính Tuổi POST</h2>");
+//        
+//        writer.print("<h4>Họ tên: "+ hoTen+ "</h4>");
+//        writer.print("<h4>Năm sinh: " + namSinh + "</h4>");
+//        writer.print("<h5>Tuổi: " + kqTuoi + "</h5></br>");
     }
 }
