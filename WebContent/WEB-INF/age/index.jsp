@@ -7,11 +7,18 @@
 <title>Tuổi Người Dùng</title>
 </head>
 <body>
-        <from>");
-        <h2>Trang Tính Tuổi</h2>");
+        <from>
+        <h2>Trang Tính Tuổi</h2>
+        <%
+           String hoTen = request.getParameter("fullname");
+           String namSinh = request.getParameter("year");
+        %>
+        <label>Họ tên: <%= hoTen %></label></br>
         
-        <label>Họ tên: </label></br>");
-        <label>Năm sinh: </label></br>");
-        <label>Tuổi: </label></br>");
+        <label>Năm sinh:<%= namSinh%> </label></br>
+        <%
+        int tuoi = (Integer)request.getAttribute("tuoiNguoiDung");
+        %>
+        <label>Tuổi: <%= tuoi %></label></br>
 </body>
 </html>

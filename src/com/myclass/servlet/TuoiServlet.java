@@ -55,6 +55,8 @@ public class TuoiServlet extends HttpServlet {
         System.err.println("kqTuoi: " + kqTuoi);
         
         //thêm thông tin tuổi vào request
+        req.setAttribute("hoTen", hoTen);
+        req.setAttribute("namSinh", namSinh);
         req.setAttribute("tuoiNguoiDung", kqTuoi);
         req.getRequestDispatcher("/WEB-INF/age/index.jsp").forward(req,resp);
 //        

@@ -7,17 +7,16 @@
 	<title>Thông Tin User</title>
 </head>
 <body>
-    <form action = '/BaiTap/age' method = 'POST'>");
-        <h2>Nhập Thông Tin</h2>");
-        <label >Họ tên: </label></br>");
-        <input type = 'text' name = 'fullname'></br></br>");
+    <form action = '/BaiTap/age' method = 'POST'>
+        <h2>Nhập Thông Tin</h2>
+        <label >Họ tên: </label></br>
+        <input type = 'text' name = 'fullname'></br></br>
 
-        <label >Năm sinh: </label></br>");
-        <input type = 'text' name = 'year'></br></br>");
+        <label >Năm sinh: </label></br>
+        <input type = 'text' name = 'year'></br></br>
 
-        <button type = 'submit'>Tính Tuổi</button></br></br>");
+        <button type = 'submit'>Tính Tuổi</button></br></br>
 
-        //<label>Tuổi: </label></br>");
-    </form>");
+    </form>
 </body>
 </html>
