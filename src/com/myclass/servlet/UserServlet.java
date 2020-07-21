@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet(urlPatterns= {"/user","/user/add","/user/table"})
+@WebServlet(urlPatterns= {"/user","/user/add","/user/table","/user/details"})
 public class UserServlet extends HttpServlet{
 
     @Override
