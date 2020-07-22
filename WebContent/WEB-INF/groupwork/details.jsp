@@ -94,7 +94,7 @@
     <div class="row">
       <div class="col-xs-12">
         <a href="#" class="group-title"> <img width="30"
-          src="<c:url value="/status/plugins/images/users/pawandeep.jpg"></c:url>" class="img-circle" >
+          src="<c:url value="/static/plugins/images/users/pawandeep.jpg"></c:url>" class="img-circle" >
           <span>Pavan kumar</span>
         </a>
       </div>
@@ -162,7 +162,7 @@
     <div class="row">
       <div class="col-xs-12">
         <a href="#" class="group-title"> 
-        <img width="30" src="<c:url value="/status/plugins/images/users/pawandeep.jpg"></c:url>" class="img-circle">
+        <img width="30" src="<c:url value="/static/plugins/images/users/pawandeep.jpg"></c:url>" class="img-circle">
           <span>Pavan kumar</span>
         </a>
       </div>
