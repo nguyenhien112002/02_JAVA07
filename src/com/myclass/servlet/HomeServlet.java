@@ -17,6 +17,7 @@ public class HomeServlet extends HttpServlet{
         
         String action = req.getServletPath();
         System.out.println(action);
+        
         switch(action) {
         case "/home":
             req.getRequestDispatcher("WEB-INF/home/index.jsp").forward(req, resp);
