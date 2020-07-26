@@ -1,34 +1,40 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-  pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<!-- Page Content -->
-<div id="page-wrapper">
-  <div class="container-fluid">
-    <div class="row bg-title">
-      <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
-        <h4 class="page-title">Blank Page</h4>
-      </div>
-      <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
-        <a href="http://wrappixel.com/templates/pixeladmin/"
-          target="_blank"
-          class="btn btn-danger pull-right m-l-20 btn-rounded btn-outline hidden-xs hidden-sm waves-effect waves-light">Upgrade
-          to Pro</a>
-        <ol class="breadcrumb">
-          <li><a href="#">Dashboard</a></li>
-          <li class="active">Blank Page</li>
-        </ol>
-      </div>
-      <!-- /.col-lg-12 -->
+    pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://www.opensymphony.com/sitemesh/decorator" prefix="dec" %>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" type="image/png" sizes="16x16" href="plugins/images/favicon.png">
+    <dec:title></dec:title>
+    <!-- Bootstrap Core CSS -->
+    <jsp:include page="/WEB-INF/layout/header.jsp"></jsp:include>
+</head>
+
+<body>
+    <!-- Preloader -->
+    <div class="preloader">
+        <div class="cssload-speeding-wheel"></div>
     </div>
-    <div class="row">
-      <div class="col-md-12">
-        <div class="white-box">
-          <h3 class="box-title">Blank page</h3>
-        </div>
-      </div>
+    <div id="wrapper">
+        <!-- Navigation -->
+        <jsp:include page="/WEB-INF/layout/navbar.jsp"></jsp:include>
+        <!-- Left navbar-header -->
+        <jsp:include page="/WEB-INF/layout/sidebar.jsp"></jsp:include>
+        <!-- CONTENT  -->
+        <dec:body></dec:body>
     </div>
-  </div>
-  <!-- /.container-fluid -->
-  <footer class="footer text-center"> 2018 &copy; myclass.com </footer>
-</div>
-<!-- /#page-wrapper -->
+    <!-- /#wrapper -->
+    <jsp:include page="/WEB-INF/layout/footer.jsp"></jsp:include>
+    <dec:getProperty property="page.scripts1"></dec:getProperty>
+    <dec:getProperty property="page.scripts2"></dec:getProperty>
+    <dec:getProperty property="page.scripts3"></dec:getProperty>
+</body>
+
+</html>
