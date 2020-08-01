@@ -9,14 +9,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 @WebServlet(name = "HomeServlet", urlPatterns = "/home")
-public class HomeServlet extends HttpServlet{
-	
-	private static final long serialVersionUID = 1L;
+public class HomeServlet extends HttpServlet {
 
-	@Override
-	protected void doGet(HttpServletRequest req, HttpServletResponse resp) 
-			throws ServletException, IOException {
-			
-		req.getRequestDispatcher("/WEB-INF/views/home/index.jsp").forward(req, resp);
-	}
+    private static final long serialVersionUID = 1L;
+
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
+        req.getRequestDispatcher("/WEB-INF/views/home/index.jsp").forward(req, resp);
+    }
 }
