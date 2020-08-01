@@ -1,56 +1,164 @@
 package com.myclass.dao;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+
+import com.myclass.connection.JDBCConnection;
+import com.myclass.dto.UserDto;
+import com.myclass.entity.Role;
 import com.myclass.entity.User;
 
 public class UserDao {
-	private List<User> list = null;
+    private List<User> list = null;
 
-	public UserDao() {
-		list = new ArrayList<User>();
-	}
+    public UserDao() {
+        list = new ArrayList<User>();
+    }
 
-	// Phương thức lấy danh sách
-	public List<User> findAll() {
-		return list;
-	}
+    // Phương thức lấy danh sách
+    public List<UserDto> findAllWithRole() {
+        List<UserDto> users = new ArrayList<UserDto>();
+        String query = "SELECT u.id, u.email, u.password, u.fullname, u.avatar, u.role_id, r.description as roleDesc FROM users u JOIN roles r ON u.role_id = r.id;";
+        try (Connection conn = JDBCConnection.getConnection()) {
 
-	// Phương thức lấy ra đối tượng role theo id
-	public User findById(int id) {
-		for (User user : list) {
-			if (user.getId() == id) {
-				return user;
-			}
-		}
-		return null;
-	}
+            // Tạo câu lệnh truy vấn sử dụng đối tượng PreparedStatemetn
+            PreparedStatement statement = conn.prepareStatement(query);
+            // lấy ra từ database
+            ResultSet resultset = statement.executeQuery();
+            while (resultset.next()) {
+                UserDto user = new UserDto();
+                user.setId(resultset.getInt("id"));
+                user.setFullname(resultset.getString("fullname"));
+                user.setEmail(resultset.getString("email"));
+                user.setPassword(resultset.getString("password"));
+                user.setAvatar(resultset.getString("avatar"));
+                user.setRoleId(resultset.getInt("role_id"));
+                user.setRoleDesc(resultset.getString("roleDesc"));
+                users.add(user);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return users;
+    }
 
-	// Phương thức thêm mới
-	public void add(User user) {
-		list.add(user);
-	}
+    
+ // Phương thức lấy danh sách
+    public List<User> findAll() {
+        List<User> users = new ArrayList<User>();
+        String query = "Select * From users";
+        try (Connection conn = JDBCConnection.getConnection()) {
 
-	// Phương thức cập nhật
-	public void update(User user) {
-		for (User item : list) {
-			if (item.getId() == user.getId()) {
-				item.setEmail(user.getEmail());
-				item.setPassword(user.getPassword());
-				item.setFullname(user.getFullname());
-				item.setAvatar(user.getAvatar());
-				item.setRoleId(user.getRoleId());
-			}
-		}
-	}
+            // Tạo câu lệnh truy vấn sử dụng đối tượng PreparedStatemetn
+            PreparedStatement statement = conn.prepareStatement(query);
+            // lấy ra từ database
+            ResultSet resultset = statement.executeQuery();
+            while (resultset.next()) {
+                User user = new User();
+                user.setId(resultset.getInt("id"));
+                user.setFullname(resultset.getString("fullname"));
+                user.setEmail(resultset.getString("email"));
+                user.setPassword(resultset.getString("password"));
+                user.setAvatar(resultset.getString("avatar"));
+                user.setRoleId(resultset.getInt("role_id"));
+                users.add(user);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return users;
+    }
 
-	// Phương thức xóa đối tượng role theo id
-	public void deleteById(int id) {
-		for (User user : list) {
-			if (user.getId() == id) {
-				list.remove(user);
-				break;
-			}
-		}
-	}
+    
+    // Phương thức lấy ra đối tượng role theo id
+    public User findById(int id) {
+        User user = new User();
+        String query = "Select * From users Where id =?";
+        try (Connection conn = JDBCConnection.getConnection()) {
+            // System.out.println("Kết nối thành công");
+            // Tạo câu lệnh truy vấn sử dụng đối tượng PreparedStatemetn
+            PreparedStatement statement = conn.prepareStatement(query);
+            statement.setInt(1, id);
+            // Thực thi câu lệnh truy vấn =>tạo đối tượng ResultSet lưu trữ tạm thời dữ liệu
+            // lấy ra từ database
+            ResultSet resultset = statement.executeQuery();
+
+            while (resultset.next()) {
+                user.setId(resultset.getInt("id"));
+                user.setFullname(resultset.getString("fullname"));
+                user.setEmail(resultset.getString("email"));
+                user.setPassword(resultset.getString("password"));
+                user.setAvatar(resultset.getString("avatar"));
+                user.setRoleId(resultset.getInt("roleId"));
+                break;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return user;
+    }
+
+    // Phương thức thêm mới
+    public void add(User user) {
+        String query = "INSERT INTO users (email, password, fullname,avatar, role_id) VALUES (?,?,?,?,?);";
+        try (Connection conn = JDBCConnection.getConnection()) {
+            // System.out.println("Kết nối thành công");
+            // Tạo câu lệnh truy vấn sử dụng đối tượng PreparedStatemetn
+            PreparedStatement statement = conn.prepareStatement(query);
+            statement.setString(1, user.getEmail());
+            statement.setString(2, user.getPassword());
+            statement.setString(3, user.getFullname());
+            statement.setString(4, user.getAvatar());
+            statement.setInt(5, user.getRoleId());
+            // Thực thi câu lệnh truy vấn =>tạo đối tượng ResultSet lưu trữ tạm thời dữ liệu
+            // lấy ra từ database
+            statement.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    // Phương thức cập nhật
+    public void update(User user) {
+        String query = "Update users set email=? password=?, fullname=?,avatar=?, role_id=? where id = ? ;";
+        try (Connection conn = JDBCConnection.getConnection()) {
+            // System.out.println("Kết nối thành công");
+            // Tạo câu lệnh truy vấn sử dụng đối tượng PreparedStatemetn
+            PreparedStatement statement = conn.prepareStatement(query);
+            statement.setString(1, user.getEmail());
+            statement.setString(2, user.getPassword());
+            statement.setString(3, user.getFullname());
+            statement.setString(4, user.getAvatar());
+            statement.setInt(5, user.getRoleId());
+            statement.setInt(6, user.getId());
+            // Thực thi câu lệnh truy vấn =>tạo đối tượng ResultSet lưu trữ tạm thời dữ liệu
+            // lấy ra từ database
+            statement.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    // Phương thức xóa đối tượng role theo id
+    public void deleteById(int id) {
+        String query = "Delete From roles where id = ?";
+        try (Connection conn = JDBCConnection.getConnection()) {
+            // System.out.println("Kết nối thành công");
+            // Tạo câu lệnh truy vấn sử dụng đối tượng PreparedStatemetn
+            PreparedStatement statement = conn.prepareStatement(query);
+            statement.setInt(1, id);
+            // Thực thi câu lệnh truy vấn =>tạo đối tượng ResultSet lưu trữ tạm thời dữ liệu
+            // lấy ra từ database
+            statement.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }
