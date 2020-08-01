@@ -125,7 +125,7 @@ public class UserDao {
 
     // Phương thức cập nhật
     public void update(User user) {
-        String query = "Update users set email=? password=?, fullname=?,avatar=?, role_id=? where id = ? ;";
+        String query = "Update users set email=?, password=?, fullname=?,avatar=?, role_id=? where id = ? ;";
         try (Connection conn = JDBCConnection.getConnection()) {
             // System.out.println("Kết nối thành công");
             // Tạo câu lệnh truy vấn sử dụng đối tượng PreparedStatemetn
@@ -147,7 +147,7 @@ public class UserDao {
 
     // Phương thức xóa đối tượng role theo id
     public void deleteById(int id) {
-        String query = "Delete From roles where id = ?";
+        String query = "Delete From users where id = ?";
         try (Connection conn = JDBCConnection.getConnection()) {
             // System.out.println("Kết nối thành công");
             // Tạo câu lệnh truy vấn sử dụng đối tượng PreparedStatemetn

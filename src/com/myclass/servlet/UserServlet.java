@@ -73,18 +73,21 @@ public class UserServlet extends HttpServlet {
         String password = req.getParameter("password");
         String fullname = req.getParameter("fullname");
         String avatar = req.getParameter("avatar");
-        int roleId = Integer.valueOf(req.getParameter("role_id"));
+        int roleId = Integer.valueOf(req.getParameter("roleId"));
 
-        User user = new User(email, password, fullname, avatar, roleId);
+        User user;// = new User(email, password, fullname, avatar, roleId);
         
         switch (action) {
         case "/user/add":
             //mã hóa mật khẩu
+            user = new User(email, password, fullname, avatar, roleId);
             String hashed = BCrypt.hashpw(password, BCrypt.gensalt(12));
             user.setPassword(hashed);
             userDao.add(user);
             break;
         case "/user/edit":
+            int id = Integer.valueOf(req.getParameter("id"));
+            user = new User(id,email, password, fullname, avatar, roleId);
             userDao.update(user);
             break;
         default:

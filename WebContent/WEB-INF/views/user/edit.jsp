@@ -16,13 +16,12 @@
         <form action='<c:url value="/user/edit"/>' method="post"
           class="form-horizontal form-material">
 
-          <%-- <div class="form-group">
-						<label class="col-md-12">Id</label>
-						<div class="col-md-12">
-							<input type="text" name="id" value="${ user.id }"
-								class="form-control form-control-line" />
-						</div>
-					</div> --%>
+          <div class="form-group">
+            <div class="col-md-12">
+              <input type="hidden" name="id" value="${ user.id }"
+                class="form-control form-control-line" />
+            </div>
+          </div>
 
           <div class="form-group">
             <label class="col-md-12">Email</label>
