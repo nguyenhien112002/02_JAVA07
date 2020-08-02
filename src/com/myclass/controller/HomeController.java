@@ -1,4 +1,4 @@
-package com.myclass.servlet;
+package com.myclass.controller;
 
 import java.io.IOException;
 
@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 @WebServlet(name = "HomeServlet", urlPatterns = "/home")
-public class HomeServlet extends HttpServlet{
+public class HomeController extends HttpServlet{
 	
 	private static final long serialVersionUID = 1L;
 
