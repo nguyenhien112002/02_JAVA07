@@ -1,4 +1,4 @@
-package com.myclass.servlet;
+package com.myclass.controller;
 
 import java.io.IOException;
 import java.util.List;
@@ -18,13 +18,13 @@ import com.myclass.entity.Role;
 import com.myclass.entity.User;
 
 @WebServlet(name = "UserServlet", urlPatterns = { "/user", "/user/add", "/user/edit", "/user/delete", "/user/details" })
-public class UserServlet extends HttpServlet {
+public class UserController extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
     private RoleDao roleDao = null;
     private UserDao userDao = null;
 
-    public UserServlet() {
+    public UserController() {
         roleDao = new RoleDao();
         userDao = new UserDao();
     }

@@ -161,4 +161,38 @@ public class UserDao {
             e.printStackTrace();
         }
     }
+    /*
+     * ham lay thong tin user bang email
+     * tham so email(lay tu form dang nhap)
+     * tra ve: 
+     *        null neu khong tim thay
+     *        Doi tuong user chua thong tin tu db neu tim thay
+     */
+    public User findByEmail(String email) {
+        String query = "Select * FROM users WHERE email = ?;";
+        User user = null;
+        try (Connection conn = JDBCConnection.getConnection()) {
+            // Tạo câu lệnh truy vấn sử dụng PreparedStatement
+            PreparedStatement statement = conn.prepareStatement(query);
+            // Thay thế dấu ? bằng dữ liệu lấy ra từ đối tượng role
+            statement.setString(1, email);
+            // Thực thi câu lệnh truy vấn
+            ResultSet resultSet = statement.executeQuery();
+            
+            while (resultSet.next()) {
+                user = new User();
+                user.setId(resultSet.getInt("id"));
+                user.setFullname(resultSet.getString("fullname"));
+                user.setEmail(resultSet.getString("email"));
+                user.setAvatar(resultSet.getString("avatar"));
+                user.setRoleId(resultSet.getInt("role_id"));
+                break;
+            }
+            
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+        return user;
+    }
 }
