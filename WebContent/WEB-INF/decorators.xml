@@ -1,12 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<decorators defaultdir="/WEB-INF/views/auth">
-  <decorator name="login" page="login.jsp">
+<decorators defaultdir="/WEB-INF/views/layout/">
+  <excludes>
     <pattern>/login</pattern>
-  </decorator>
-</decorators>
-
-<!-- <decorators defaultdir="/WEB-INF/views/layout/">
+  </excludes>
   <decorator name="default" page="default.jsp">
     <pattern>/*</pattern>
   </decorator>
-</decorators> -->
+</decorators>

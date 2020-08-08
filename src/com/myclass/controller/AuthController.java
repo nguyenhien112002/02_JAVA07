@@ -14,7 +14,7 @@ import org.mindrot.jbcrypt.BCrypt;
 import com.myclass.dao.UserDao;
 import com.myclass.entity.User;
 
-@WebServlet(name = "LoginServlet", urlPatterns = {"/login"})
+@WebServlet(name = "LoginServlet", urlPatterns = {"/login","/logout"})
 public class AuthController extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
@@ -27,8 +27,19 @@ public class AuthController extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String action = req.getServletPath();
         System.out.println(action);
-
-        req.getRequestDispatcher("/WEB-INF/views/auth/login.jsp").forward(req, resp);
+        switch(action) {
+        case "/login":
+            req.getRequestDispatcher("/WEB-INF/views/auth/login.jsp").forward(req, resp);
+            break;
+        case "/logout":
+            HttpSession session = req.getSession();
+            session.removeAttribute("LOGIN");
+            resp.sendRedirect(req.getContextPath()+"/login");
+            req.getRequestDispatcher("/WEB-INF/views/auth/login.jsp").forward(req, resp);
+            break;
+        default:
+            break;
+        }
     }
 
     @Override
@@ -41,10 +52,10 @@ public class AuthController extends HttpServlet {
         // -TH1: findByEmail tra ve null=>xuat thong bao cho nguoi dung
         // -TH2: findByEmail tra ve khac null, sang buoc 2
         User user = userDao.findByEmail(email);
-        if (user != null) {
+        if (user == null) {
             // thong bao sai email/pass
             req.setAttribute("message", "Sai email, password!");
-            req.getRequestDispatcher("WEB-INF/view/auth/login.jsp");
+            req.getRequestDispatcher("WEB-INF/view/auth/login.jsp").forward(req, resp);
         } else {
             // Buoc 2: kiem tra password
             // -TH1: khong dung pass, thong bao cho nguoi dung
@@ -52,7 +63,7 @@ public class AuthController extends HttpServlet {
             if (!BCrypt.checkpw(password, user.getPassword())) {
                 // thong bao sai email/pass
                 req.setAttribute("message", "Sai email, password!");
-                req.getRequestDispatcher("WEB-INF/view/auth/login.jsp");
+                req.getRequestDispatcher("WEB-INF/view/auth/login.jsp").forward(req, resp);
             } else {
                 // Buoc 3: luu thong tin user vao session
                 HttpSession session = req.getSession();
