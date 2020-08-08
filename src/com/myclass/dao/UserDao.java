@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.myclass.connection.JDBCConnection;
+import com.myclass.dto.LoginDto;
 import com.myclass.dto.UserDto;
 import com.myclass.entity.Role;
 import com.myclass.entity.User;
@@ -19,6 +20,33 @@ public class UserDao {
         list = new ArrayList<User>();
     }
 
+ // Phương thức lấy danh sách
+    public LoginDto checkLoginDto(String email) {
+        LoginDto dto = null;
+        String query = "SELECT u.id, u.email, u.password, u.fullname, u.avatar, r.name as roleName "
+                + "FROM users u JOIN roles r ON u.role_id = r.id Where email=?";
+        try (Connection conn = JDBCConnection.getConnection()) {
+            // Tạo câu lệnh truy vấn sử dụng đối tượng PreparedStatemetn
+            PreparedStatement statement = conn.prepareStatement(query);
+            statement.setString(1, email);
+            // lấy ra từ database
+            ResultSet resultset = statement.executeQuery();
+            while (resultset.next()) {
+                dto = new LoginDto();
+                dto.setId(resultset.getInt("id"));
+                dto.setFullname(resultset.getString("fullname"));
+                dto.setEmail(resultset.getString("email"));
+                dto.setPassword(resultset.getString("password"));
+                dto.setAvatar(resultset.getString("avatar"));
+                dto.setRoleName(resultset.getString("roleName"));
+                break;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return dto;
+    }
+    
     // Phương thức lấy danh sách
     public List<UserDto> findAllWithRole() {
         List<UserDto> users = new ArrayList<UserDto>();

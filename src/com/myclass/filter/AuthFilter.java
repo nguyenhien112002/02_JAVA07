@@ -3,12 +3,16 @@ package com.myclass.filter;
 import java.io.IOException;
 
 import javax.servlet.Filter;
+import javax.servlet.FilterChain;
+import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+import com.myclass.dto.LoginDto;
 
 @WebFilter(urlPatterns = { "/*" })
 public class AuthFilter implements Filter {
@@ -23,9 +27,10 @@ public class AuthFilter implements Filter {
         HttpServletResponse resp = (HttpServletResponse) response;
 
         String action = req.getServletPath();
+        System.out.println(action);
 
         // BỎ QUA MẤY LINK NÀY KO CẦN KIỂM TRA ĐĂNG NHẬP
-        if (action.startsWith("/login") || action.startsWith("/logout")) {
+        if (action.startsWith("/login") || action.startsWith("/logout")|| action.startsWith("/error/*")) {
             chain.doFilter(request, response);
             return;
         }
@@ -39,9 +44,21 @@ public class AuthFilter implements Filter {
 
         // phan quyen nguoi dung
         // phan quyen dua tren url va rolename
-
+        LoginDto loginDto = (LoginDto)session.getAttribute("LOGIN");
+        System.out.println("URL: " + action);
+        String tenquyen = loginDto.getRoleName();
+        System.out.println("ten quyen: "+tenquyen);
+        
+        String roleName = loginDto.getRoleName();
+        if(action.startsWith("/role")&& !roleName.equals("ROLE_ADMIN")) {
+            resp.sendRedirect(req.getContextPath() + "/error/403");
+            return;
+        }
+        if(action.startsWith("/user")&& !(roleName.equals("ROLE_ADMIN") || roleName.equals("ROLE_LEADER"))) {
+            resp.sendRedirect(req.getContextPath() + "/error/403");
+            return;
+        }
         chain.doFilter(request, response);
-
     }
 
 }

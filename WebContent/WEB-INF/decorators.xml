@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <decorators defaultdir="/WEB-INF/views/layout/">
   <excludes>
+    <pattern>/error/*</pattern>
     <pattern>/login</pattern>
   </excludes>
   <decorator name="default" page="default.jsp">
