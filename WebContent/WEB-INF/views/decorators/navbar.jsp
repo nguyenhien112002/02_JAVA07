@@ -26,13 +26,22 @@
                         </form>
                     </li>
                 </ul>
+                
                 <ul class="nav navbar-top-links navbar-right pull-right">
                     <li>
-                        <a class="profile-pic" href="#"> 
-                        	<img src='<c:url value="/assets/plugins/images/users/varun.jpg"/>' alt="user-img" width="36" class="img-circle">
-                        	<b class="hidden-xs">Steave</b>
-                        </a>
+                        <div class="dropdown">
+                            <a class="profile-pic dropdown-toggle" data-toggle="dropdown" href="#"> 
+                                <img src='<c:url value="/assets/plugins/images/users/varun.jpg"/>' alt="user-img" width="36" class="img-circle" />
+                                <b class="hidden-xs">Cybersoft</b> 
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a href="#">Thông tin cá nhân</a></li>
+                                <li><a href="#">Thống kê công việc</a></li>
+                                <li class="divider"></li>
+                                <li><a href='<c:url value="/logout"/>'>Đăng xuất</a></li>
+                            </ul>
+                        </div>
                     </li>
                 </ul>
-            </div>
+           </div>
         </nav>
