@@ -13,8 +13,9 @@
     <div class="col-md-2 col-12"></div>
     <div class="col-md-8 col-xs-12">
       <div class="white-box">
-        <form action='<c:url value="/user/add"/>' method="post"
-          class="form-horizontal form-material">
+        <form action='<c:url value="/user/add"/>' 
+            method="post" enctype = "multipart/form-data"
+            class="form-horizontal form-material">
           <!-- <div class="form-group">
 						<label class="col-md-12">Id</label>
 						<div class="col-md-12">
@@ -49,7 +50,7 @@
           <div class="form-group">
             <label class="col-md-12">Avatar</label>
             <div class="col-md-12">
-              <input type="text" name="avatar"
+              <input type=file name="avatar"
                 class="form-control form-control-line" />
             </div>
           </div>

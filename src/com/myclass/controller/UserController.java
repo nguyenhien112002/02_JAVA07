@@ -1,13 +1,16 @@
 package com.myclass.controller;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.Part;
 
 import org.mindrot.jbcrypt.BCrypt;
 
@@ -18,6 +21,7 @@ import com.myclass.entity.Role;
 import com.myclass.entity.User;
 
 @WebServlet(name = "UserServlet", urlPatterns = { "/user", "/user/add", "/user/edit", "/user/delete", "/user/details" })
+@MultipartConfig(fileSizeThreshold = 1024 * 1024 * 2, maxFileSize = 1024 * 1024 * 50, maxRequestSize = 1024 * 1024 * 50)
 public class UserController extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
@@ -68,31 +72,63 @@ public class UserController extends HttpServlet {
         resp.setCharacterEncoding("UTF-8");
         String action = req.getServletPath();
 
-        //int id = Integer.valueOf(req.getParameter("id"));
+        // int id = Integer.valueOf(req.getParameter("id"));
         String email = req.getParameter("email");
         String password = req.getParameter("password");
         String fullname = req.getParameter("fullname");
-        String avatar = req.getParameter("avatar");
         int roleId = Integer.valueOf(req.getParameter("roleId"));
+        String avatar = "";
 
-        User user;// = new User(email, password, fullname, avatar, roleId);
-        
-        switch (action) {
-        case "/user/add":
-            //mã hóa mật khẩu
-            user = new User(email, password, fullname, avatar, roleId);
-            String hashed = BCrypt.hashpw(password, BCrypt.gensalt(12));
-            user.setPassword(hashed);
-            userDao.add(user);
-            break;
-        case "/user/edit":
-            int id = Integer.valueOf(req.getParameter("id"));
-            user = new User(id,email, password, fullname, avatar, roleId);
-            userDao.update(user);
-            break;
-        default:
-            break;
+        // lay hinh anh
+        for (Part part : req.getParts()) {
+            String contentDisp = part.getHeader("content-disposition");
+            // System.out.println(contentDisp);
+            // chuyen contentDisp thanh mang
+            System.out.println("----------------------------");
+            String[] arrFormData = contentDisp.split(";");
+            String fileName = "";
+            for (String item : arrFormData) {
+                System.out.println(item);
+                if (item.trim().startsWith("filename")) {
+                    fileName = item.substring(11, item.length() - 1);
+                    System.out.println(fileName);
+                }
+            }
+            // lay duong dan toi thu muc webcontent
+            if (!fileName.isEmpty()) {
+                String appPath = req.getServletContext().getRealPath("");
+                // tao duong dan thu muc chua hinh upload
+                // String savePath = appPath + File.separator + "assets/uploads";
+                String savePath = appPath + "assets/uploads";
+                System.out.println(savePath);
+                // tao thu muc moi
+                File fileSaveDir = new File(savePath);
+                if (!fileSaveDir.exists()) {
+                    fileSaveDir.mkdir();
+                }
+                part.write(savePath + File.separator + fileName);
+                avatar = "assets/uploads" + fileName;
+            }
         }
-        resp.sendRedirect(req.getContextPath() + "/user");
+
+        // User user;// = new User(email, password, fullname, avatar, roleId);
+        //
+        // switch (action) {
+        // case "/user/add":
+        // //mã hóa mật khẩu
+        // user = new User(email, password, fullname, avatar, roleId);
+        // String hashed = BCrypt.hashpw(password, BCrypt.gensalt(12));
+        // user.setPassword(hashed);
+        // userDao.add(user);
+        // break;
+        // case "/user/edit":
+        // int id = Integer.valueOf(req.getParameter("id"));
+        // user = new User(id,email, password, fullname, avatar, roleId);
+        // userDao.update(user);
+        // break;
+        // default:
+        // break;
+        // }
+        // resp.sendRedirect(req.getContextPath() + "/user");
     }
 }
