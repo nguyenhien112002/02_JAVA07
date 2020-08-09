@@ -14,7 +14,7 @@ import javax.servlet.http.HttpSession;
 
 import com.myclass.dto.LoginDto;
 
-//@WebFilter(urlPatterns = { "/*" })
+@WebFilter(urlPatterns = { "/*" })
 public class AuthFilter implements Filter {
 
     @Override

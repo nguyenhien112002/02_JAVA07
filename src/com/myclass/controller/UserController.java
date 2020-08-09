@@ -20,7 +20,7 @@ import com.myclass.dto.UserDto;
 import com.myclass.entity.Role;
 import com.myclass.entity.User;
 
-@WebServlet(name = "UserServlet", urlPatterns = { "/user", "/user/add", "/user/edit", "/user/delete", "/user/details" })
+@WebServlet(name = "UserServlet", urlPatterns = { "/user", "/user/add", "/user/edit", "/user/delete", "/user/details","/user/password" })
 @MultipartConfig(fileSizeThreshold = 1024 * 1024 * 2, maxFileSize = 1024 * 1024 * 50, maxRequestSize = 1024 * 1024 * 50)
 public class UserController extends HttpServlet {
     private static final long serialVersionUID = 1L;
@@ -53,6 +53,9 @@ public class UserController extends HttpServlet {
             req.setAttribute("roles", roleDao.findAll());
             req.getRequestDispatcher("/WEB-INF/views/user/edit.jsp").forward(req, resp);
             break;
+        case "/user/password":
+            req.getRequestDispatcher("/WEB-INF/views/user/password.jsp").forward(req, resp);
+            break;
         case "/user/details":
             req.getRequestDispatcher("/WEB-INF/views/user/details.jsp").forward(req, resp);
             break;
@@ -77,58 +80,74 @@ public class UserController extends HttpServlet {
         String password = req.getParameter("password");
         String fullname = req.getParameter("fullname");
         int roleId = Integer.valueOf(req.getParameter("roleId"));
-        String avatar = "";
+        String avatar = saveFile(req);
 
-        // lay hinh anh
-        for (Part part : req.getParts()) {
-            String contentDisp = part.getHeader("content-disposition");
-            // System.out.println(contentDisp);
-            // chuyen contentDisp thanh mang
-            System.out.println("----------------------------");
-            String[] arrFormData = contentDisp.split(";");
-            String fileName = "";
-            for (String item : arrFormData) {
-                System.out.println(item);
-                if (item.trim().startsWith("filename")) {
-                    fileName = item.substring(11, item.length() - 1);
-                    System.out.println(fileName);
-                }
-            }
-            // lay duong dan toi thu muc webcontent
-            if (!fileName.isEmpty()) {
-                String appPath = req.getServletContext().getRealPath("");
-                // tao duong dan thu muc chua hinh upload
-                // String savePath = appPath + File.separator + "assets/uploads";
-                String savePath = appPath + "assets/uploads";
-                System.out.println(savePath);
-                // tao thu muc moi
-                File fileSaveDir = new File(savePath);
-                if (!fileSaveDir.exists()) {
-                    fileSaveDir.mkdir();
-                }
-                part.write(savePath + File.separator + fileName);
-                avatar = "assets/uploads" + fileName;
-            }
+        User user;// = new User(email, password, fullname, avatar, roleId);
+
+        switch (action) {
+        case "/user/add":
+            // mã hóa mật khẩu
+            user = new User(email, password, fullname, avatar, roleId);
+            String hashed = BCrypt.hashpw(password, BCrypt.gensalt(12));
+            user.setPassword(hashed);
+            userDao.add(user);
+            break;
+        case "/user/edit":
+            int id = Integer.valueOf(req.getParameter("id"));
+            user = userDao.findById(id);
+            user.setEmail(email);
+            user.setFullname(fullname);
+            user.setAvatar(avatar);
+            user.setRoleId(roleId);
+            
+            userDao.update(user);
+            break;
+        default:
+            break;
         }
-
-        // User user;// = new User(email, password, fullname, avatar, roleId);
-        //
-        // switch (action) {
-        // case "/user/add":
-        // //mã hóa mật khẩu
-        // user = new User(email, password, fullname, avatar, roleId);
-        // String hashed = BCrypt.hashpw(password, BCrypt.gensalt(12));
-        // user.setPassword(hashed);
-        // userDao.add(user);
-        // break;
-        // case "/user/edit":
-        // int id = Integer.valueOf(req.getParameter("id"));
-        // user = new User(id,email, password, fullname, avatar, roleId);
-        // userDao.update(user);
-        // break;
-        // default:
-        // break;
-        // }
-        // resp.sendRedirect(req.getContextPath() + "/user");
+        resp.sendRedirect(req.getContextPath() + "/user");
+    }
+    
+    private String saveFile(HttpServletRequest req) {
+        String avatar = "";
+        
+        try {
+         // lay hinh anh
+            for (Part part : req.getParts()) {
+                String contentDisp = part.getHeader("content-disposition");
+                // System.out.println(contentDisp);
+                // chuyen contentDisp thanh mang
+                System.out.println("----------------------------");
+                String[] arrFormData = contentDisp.split(";");
+                String fileName = "";
+                for (String item : arrFormData) {
+                    System.out.println(item);
+                    if (item.trim().startsWith("filename")) {
+                        fileName = item.substring(11, item.length() - 1);
+                        System.out.println(fileName);
+                    }
+                }
+                // lay duong dan toi thu muc webcontent
+                if (!fileName.isEmpty()) {
+                    String appPath = req.getServletContext().getRealPath("");
+                    // tao duong dan thu muc chua hinh upload
+                    // String savePath = appPath + File.separator + "assets/uploads";
+                    String savePath = appPath + "assets/uploads";
+                    System.out.println(savePath);
+                    // tao thu muc moi
+                    File fileSaveDir = new File(savePath);
+                    if (!fileSaveDir.exists()) {
+                        fileSaveDir.mkdir();
+                    }
+                    part.write(savePath + File.separator + fileName);
+                    avatar = "assets/uploads/" + fileName;
+                }
+            }
+            
+        }
+        catch(Exception e) {
+            
+        }
+        return avatar;
     }
 }

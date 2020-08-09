@@ -13,7 +13,7 @@
     <div class="col-md-2 col-12"></div>
     <div class="col-md-8 col-xs-12">
       <div class="white-box">
-        <form action='<c:url value="/user/edit"/>' method="post"
+        <form action='<c:url value="/user/edit"/>' method="post" enctype = "multipart/form-data"
           class="form-horizontal form-material">
 
           <div class="form-group">
@@ -32,15 +32,6 @@
           </div>
 
           <div class="form-group">
-            <label class="col-md-12">Mật khẩu</label>
-            <div class="col-md-12">
-              <input type="password" name="password"
-                value="${ user.password }"
-                class="form-control form-control-line" />
-            </div>
-          </div>
-
-          <div class="form-group">
             <label class="col-md-12">Họ tên</label>
             <div class="col-md-12">
               <input type="text" name="fullname"
@@ -52,7 +43,7 @@
           <div class="form-group">
             <label class="col-md-12">Avatar</label>
             <div class="col-md-12">
-              <input type="text" name="avatar" value="${ user.avatar }"
+              <input type=file name="avatar" value="${ user.avatar }"
                 class="form-control form-control-line" />
             </div>
           </div>
