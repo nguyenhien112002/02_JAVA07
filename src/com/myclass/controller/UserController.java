@@ -10,17 +10,20 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 
 import org.mindrot.jbcrypt.BCrypt;
 
 import com.myclass.dao.RoleDao;
 import com.myclass.dao.UserDao;
+import com.myclass.dto.LoginDto;
 import com.myclass.dto.UserDto;
 import com.myclass.entity.Role;
 import com.myclass.entity.User;
 
-@WebServlet(name = "UserServlet", urlPatterns = { "/user", "/user/add", "/user/edit", "/user/delete", "/user/details","/user/password" })
+@WebServlet(name = "UserServlet", urlPatterns = { "/user", "/user/add", "/user/edit", "/user/delete", "/user/details",
+        "/user/password" })
 @MultipartConfig(fileSizeThreshold = 1024 * 1024 * 2, maxFileSize = 1024 * 1024 * 50, maxRequestSize = 1024 * 1024 * 50)
 public class UserController extends HttpServlet {
     private static final long serialVersionUID = 1L;
@@ -99,20 +102,33 @@ public class UserController extends HttpServlet {
             user.setFullname(fullname);
             user.setAvatar(avatar);
             user.setRoleId(roleId);
-            
+
             userDao.update(user);
+            break;
+        case "/user/password":
+            String confirm = req.getParameter("confirm");
+            if(password.equals(confirm)) {
+                HttpSession session = req.getSession();
+                LoginDto loginDto = (LoginDto)session.getAttribute("LOGIN");
+                
+                user = userDao.findById(loginDto.getId());
+                user.setPassword(BCrypt.hashpw(password, BCrypt.gensalt(12)));
+                userDao.update(user);
+                //bat dang nhap lai sau khi doi mat khau
+                resp.sendRedirect(req.getContextPath()+"/logout");
+            }
             break;
         default:
             break;
         }
         resp.sendRedirect(req.getContextPath() + "/user");
     }
-    
+
     private String saveFile(HttpServletRequest req) {
         String avatar = "";
-        
+
         try {
-         // lay hinh anh
+            // lay hinh anh
             for (Part part : req.getParts()) {
                 String contentDisp = part.getHeader("content-disposition");
                 // System.out.println(contentDisp);
@@ -143,10 +159,9 @@ public class UserController extends HttpServlet {
                     avatar = "assets/uploads/" + fileName;
                 }
             }
-            
-        }
-        catch(Exception e) {
-            
+
+        } catch (Exception e) {
+
         }
         return avatar;
     }

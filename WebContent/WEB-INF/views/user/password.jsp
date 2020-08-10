@@ -13,26 +13,24 @@
     <div class="col-md-2 col-12"></div>
     <div class="col-md-8 col-xs-12">
       <div class="white-box">
-        <form action='<c:url value="/user/edit"/>' method="post" enctype = "multipart/form-data"
+        <form action='<c:url value="/user/edit"/>' method="post"
+          enctype="multipart/form-data"
           class="form-horizontal form-material">
-
           <div class="form-group">
             <label class="col-md-12">Password</label>
             <div class="col-md-12">
-              <input type="password" name="password" 
+              <input type="password" name="password"
                 class="form-control form-control-line" />
             </div>
           </div>
-          ffdf
-          
-
           <div class="form-group">
-            <label class="col-md-12">Password</label>
+            <label class="col-md-12">Confirm Password</label>
             <div class="col-md-12">
-              <input type="password" name="password" 
+              <input type="password" name="confirm"
                 class="form-control form-control-line" />
             </div>
-          </div>          <div class="form-group">
+          </div>
+          <div class="form-group">
             <div class="col-sm-12">
               <button type="submit" class="btn btn-success">Lưu
                 lại</button>
