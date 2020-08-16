@@ -17,7 +17,7 @@ import com.myclass.entity.Role;
 @WebServlet(urlPatterns = { "/job", "/job/add", "/job/edit", "/job/delete" })
 public class JobController extends HttpServlet {
     JobDao jobDao = null;
-    
+
     public JobController() {
         jobDao = new JobDao();
     }
@@ -38,42 +38,49 @@ public class JobController extends HttpServlet {
         case "/job/edit":
             int idEdit = Integer.valueOf(req.getParameter("id"));
             Job job = jobDao.findById(idEdit);
+            req.setAttribute("job", job);
             req.getRequestDispatcher("/WEB-INF/views/job/edit.jsp").forward(req, resp);
             break;
+        case "/job/delete":
+            int idDel = Integer.valueOf(req.getParameter("id"));
+            jobDao.deleteById(idDel);
+            resp.sendRedirect(req.getContextPath() + "/role");
+            return;
         default:
             break;
 
         }
     }
+
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String action = req.getServletPath();
-        
+
         String name = req.getParameter("name");
-        Date startDate = Date.valueOf("startDate");
-        Date endDate = Date.valueOf("endDate");
-        
-        Job job= null;
-        
-        
-        switch(action) {
-        case "job/add":
+        Date startDate = Date.valueOf(req.getParameter("startDate"));
+        Date endDate = Date.valueOf(req.getParameter("endDate"));
+        Job job = null;
+
+        switch (action) {
+        case "/job/add":
             job = new Job(name, startDate, endDate);
-            if(jobDao.add(job)==-1) {
+            if (jobDao.add(job) == -1) {
                 req.setAttribute("message", "Thêm mới thất bại");
                 req.getRequestDispatcher("/WEB-INF/views/job/add.jsp").forward(req, resp);
             }
             break;
-        case "job/edit":
-            job = new Job(name, startDate, endDate);
-            if(jobDao.edit(job)==-1) {
+        case "/job/edit":
+            int idEdit = Integer.valueOf(req.getParameter("id"));
+            job = new Job(idEdit,name, startDate, endDate);
+            if (jobDao.update(job) == -1) {
                 req.setAttribute("message", "Cập nhật thất bại");
-                req.getRequestDispatcher("/WEB-INF/views/job/edit.jsp").forward(req, resp);
+                req.getRequestDispatcher("/WEB-INF/views/job/job.jsp").forward(req, resp);
             }
             break;
-        
+        default:
+            break;
         }
-    
-    
+        resp.sendRedirect(req.getContextPath() + "/job");
+
     }
 }

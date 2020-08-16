@@ -12,8 +12,8 @@ import com.myclass.entity.Job;
 import com.myclass.entity.Role;
 
 public class JobDao {
-    
- // Phương thức lấy danh sách
+
+    // Phương thức lấy danh sách
     public List<Job> findAll() {
         List<Job> jobs = new ArrayList<Job>();
         // Connection conn = null;
@@ -43,10 +43,10 @@ public class JobDao {
         return jobs;
 
     }
-    
+
     public int add(Job job) {
-        //sql data
-        String query = "INSERT INTO jobs (name, startDate, endDate) VALUES (?,?,?);";
+        // sql data
+        String query = "INSERT INTO jobs (name, start_date, end_date) VALUES (?,?,?);";
         try (Connection conn = JDBCConnection.getConnection()) {
             // System.out.println("Kết nối thành công");
             // Tạo câu lệnh truy vấn sử dụng đối tượng PreparedStatemetn
@@ -64,8 +64,9 @@ public class JobDao {
         }
         return 0;
     }
+
     public int edit(Job job) {
-        //sql data
+        // sql data
         String query = "INSERT INTO jobs (name, startDate, endDate) VALUES (?,?,?);";
         try (Connection conn = JDBCConnection.getConnection()) {
             // System.out.println("Kết nối thành công");
@@ -84,7 +85,8 @@ public class JobDao {
         }
         return 0;
     }
- // Phương thức lấy ra đối tượng role theo id
+
+    // Phương thức lấy ra đối tượng role theo id
     public Job findById(int id) {
         Job job = new Job();
         String query = "Select * From jobs Where id =?";
@@ -110,5 +112,41 @@ public class JobDao {
         }
         return job;
     }
+    // Phương thức cập nhật
+    public int update(Job job) {
+        String query = "Update roles set name = ?, start_Date = ?, end_Date = ? where id = ?";
+        try (Connection conn = JDBCConnection.getConnection()) {
+            // System.out.println("Kết nối thành công");
+            // Tạo câu lệnh truy vấn sử dụng đối tượng PreparedStatemetn
+            PreparedStatement statement = conn.prepareStatement(query);
+            statement.setString(1, job.getName());
+            statement.setDate(2, job.getStartDate());
+            statement.setDate(3, job.getEndDate());
+            statement.setInt(4, job.getId());
+            // Thực thi câu lệnh truy vấn =>tạo đối tượng ResultSet lưu trữ tạm thời dữ liệu
+            // lấy ra từ database
+            statement.executeUpdate();
 
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return -1;
+        }
+        return 0;
+    }
+    // Phương thức xóa đối tượng role theo id
+    public void deleteById(int id) {
+        String query = "Delete From jobs where id = ?";
+        try (Connection conn = JDBCConnection.getConnection()) {
+            // System.out.println("Kết nối thành công");
+            // Tạo câu lệnh truy vấn sử dụng đối tượng PreparedStatemetn
+            PreparedStatement statement = conn.prepareStatement(query);
+            statement.setInt(1, id);
+            // Thực thi câu lệnh truy vấn =>tạo đối tượng ResultSet lưu trữ tạm thời dữ liệu
+            // lấy ra từ database
+            statement.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }

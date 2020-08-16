@@ -24,7 +24,7 @@
                 <th>Họ tên</th>
                 <th>Email</th>
                 <th>Loại người dùng</th>
-                <th>#</th>
+                <th>Hành Động</th>
               </tr>
             </thead>
             <tbody>

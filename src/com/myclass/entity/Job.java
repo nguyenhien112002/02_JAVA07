@@ -4,7 +4,6 @@ import java.sql.Date;
 
 public class Job {
     private int id;
-
     private String name;
     private Date startDate;
     private Date endDate;
@@ -12,6 +11,13 @@ public class Job {
     public Job() {
         super();
         // TODO Auto-generated constructor stub
+    }
+    public Job(int id, String name, Date startDate, Date endDate) {
+        super();
+        this.id = id;
+        this.name = name;
+        this.startDate = startDate;
+        this.endDate = endDate;
     }
     public Job(String name, Date startDate, Date endDate) {
         super();

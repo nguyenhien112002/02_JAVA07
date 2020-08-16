@@ -23,6 +23,7 @@
                 <th>Tên Công Việc</th>
                 <th>Ngày Bắt Đầu</th>
                 <th>Ngày Kết Thúc</th>
+                <th>Hành Động</th>
               </tr>
             </thead>
             
@@ -31,8 +32,8 @@
                 <tr>
                   <td>${ item.id }</td>
                   <td>${ item.name }</td>
-                  <td>${ item.start_date}</td>
-                  <td>${ item.end_date}</td>
+                  <td>${ item.startDate}</td>
+                  <td>${ item.endDate}</td>
                   <td>
                     <a href= '<c:url value="/job/edit?id=${item.id}"></c:url>'  class="btn btn-sm btn-primary">Sửa</a> 
                     <a href='<c:url value="/job/delete?id=${item.id}"></c:url>'   class="btn btn-sm btn-danger">Xóa</a>
