@@ -44,7 +44,7 @@ public class JobController extends HttpServlet {
         case "/job/delete":
             int idDel = Integer.valueOf(req.getParameter("id"));
             jobDao.deleteById(idDel);
-            resp.sendRedirect(req.getContextPath() + "/role");
+            resp.sendRedirect(req.getContextPath() + "/job");
             return;
         default:
             break;
